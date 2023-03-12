@@ -1,36 +1,48 @@
-const btnCreate = document.querySelector(".btn-main");
-const headline = document.getElementById("headline");
+//s2v2 Final
+const btnCreate = document.getElementById("btn-main");
 const btnToggle = document.querySelector(".btn-toggle");
 const btnRemove = document.querySelector(".btn-remove");
+const taskList = document.querySelector(".list-container ul");
+const listItems = taskList.children;
+
+function attachRemoveButton(li) {
+	let remove = document.createElement("button");
+	remove.className = "remove";
+	remove.textContent = "Remove";
+	li.appendChild(remove);
+}
 
 
-btnCreate.addEventListener('click', () => {
-  const input = document.querySelector(".input-main");   
-  const list = document.querySelector("ul");
+taskList.addEventListener("click", (event) => {
+	if (event.target.tagName === "BUTTON") {
+		const button = event.target;
+		const li = button.parentNode;
+		li.remove();
+	}
+});
 
-  list.insertAdjacentHTML(
-  'afterbegin',
-   `<li>${input.value} </li>` 
-  );
-                                 
-  input.value  = "";
-  });
-                          
 btnToggle.addEventListener("click", () => {
-const listContain = document.querySelector(".list-container");
-
-if(listContain.style.display === "none") {
-  btnToggle.textContent = "Hide List";
-  listContain.removeAttribute("style");
-}
-else {
-  btnToggle.textContent = "Show List";
-  listContain.style.display = "none";
-}
+	const listContainer = document.querySelector(".list-container");
+	if (listContainer.style.display === "none") {
+		btnToggle.textContent = "Hide List";
+		listContainer.removeAttribute("style");
+	} else {
+		btnToggle.textContent = "Show List";
+		listContainer.style.display = "none";
+	}
 });
 
-btnRemove.addEventListener("click", () => {
-                       
-const lastChild = document.querySelector('li:last-child');                   lastChild.remove();                                                      
+btnCreate.addEventListener("click", () => {
+	let ul = document.getElementsByTagName("ul")[0];
+	const input = document.querySelector(".input-main");
+	let li = document.createElement("li");
+	li.textContent = input.value;
+	ul.appendChild(li);
+	attachRemoveButton(li);
+	input.value = "";
 });
 
+
+for (let i = 0; i < listItems.length; i += 1) {
+	attachRemoveButton(listItems[i]);
+}
